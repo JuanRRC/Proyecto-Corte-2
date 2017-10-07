@@ -35,7 +35,7 @@ import javax.swing.table.DefaultTableModel;
 public class Izquierdo extends JPanel implements ActionListener {
 
 
-    public static final String AGREGARP = "AGREGARP";
+    public static final String AGREGAR = "AGREGAR";
     public static final String LISTARI = "LISTARI";
     public static final String ALERTA = "ALERTA";
     public static final String REGISTRAR = "REGISTRAR";
@@ -94,10 +94,21 @@ public class Izquierdo extends JPanel implements ActionListener {
         
         agregar = new JButton( "Agregar" );
         agregar.addActionListener( this );
-        agregar.setActionCommand( AGREGARP );	       
+        agregar.setActionCommand( AGREGAR );	       
         constraint = new GridBagConstraints( );
         constraint.gridx = 0;
         constraint.gridy = 0;
+        constraint.fill = GridBagConstraints.BOTH; 
+        insets = new Insets( 5, 10, 5, 10 );
+        constraint.insets = insets;	        
+        add( agregar, constraint );
+	
+        agregar = new JButton( "juan" );
+        agregar.addActionListener( this );
+        agregar.setActionCommand( AGREGAR );	       
+        constraint = new GridBagConstraints( );
+        constraint.gridx = 0;
+        constraint.gridy = 16;
         constraint.fill = GridBagConstraints.BOTH; 
         insets = new Insets( 5, 10, 5, 10 );
         constraint.insets = insets;	        
@@ -201,7 +212,7 @@ public class Izquierdo extends JPanel implements ActionListener {
 		// TODO Auto-generated method stub
 		
 		String accion = e.getActionCommand( );
-        if( accion.equals( AGREGARP ) ) {
+        if( accion.equals( AGREGAR ) ) {
         	
         	
         	String nombre = JOptionPane.showInputDialog("Digite el nombre del producto");
