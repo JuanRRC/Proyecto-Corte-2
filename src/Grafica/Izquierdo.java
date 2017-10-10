@@ -50,12 +50,14 @@ public class Izquierdo extends JPanel implements ActionListener {
     private SubVentana sub1;
     private JButton agregar,listari,alerta,registrar,listarc,mejores,compra,eliminar;
     private JTextField nombrep,valor,nombre,apellido,cedula,edad,empresa,sueldo;
-    private JComboBox marca,listado;
-    private JSpinner cantidad1,cantidad2,peso;
+    private JComboBox marca,listado,productos,cedula2;
+    private JSpinner cantidad1,cantidad2,cantidad3,peso;
     private String[] columnas = {" Nombre ", " Marca ", " Cantidad ", " Peso(kg) ", " Valor Unitario "};
     private String[] columnas2 = {" Nombre ", " apellido ", " cedula ", " edad ", " empresa "," sueldo actual "," foto "};
     //private ArrayList<Persona> lista2 = new ArrayList<Persona>();
     private ArrayList<Producto> lista3 = new ArrayList<Producto>();
+    private ArrayList<String> lista7 = new ArrayList<String>();
+    private ArrayList<ClienteC> lista6 = new ArrayList<ClienteC>();
     private ArrayList<Cliente> lista4 = new ArrayList<Cliente>();
     private ArrayList<Producto> lista5 = new ArrayList<Producto>();
     private ArrayList<Cliente2> lista2 = new ArrayList<Cliente2>();
@@ -98,17 +100,6 @@ public class Izquierdo extends JPanel implements ActionListener {
         constraint = new GridBagConstraints( );
         constraint.gridx = 0;
         constraint.gridy = 0;
-        constraint.fill = GridBagConstraints.BOTH; 
-        insets = new Insets( 5, 10, 5, 10 );
-        constraint.insets = insets;	        
-        add( agregar, constraint );
-	
-        agregar = new JButton( "juan" );
-        agregar.addActionListener( this );
-        agregar.setActionCommand( AGREGAR );	       
-        constraint = new GridBagConstraints( );
-        constraint.gridx = 0;
-        constraint.gridy = 16;
         constraint.fill = GridBagConstraints.BOTH; 
         insets = new Insets( 5, 10, 5, 10 );
         constraint.insets = insets;	        
@@ -203,9 +194,15 @@ public class Izquierdo extends JPanel implements ActionListener {
         SpinnerNumberModel sModel3 = new SpinnerNumberModel(0, 0, 30, 1);
         peso = new JSpinner(sModel3);
         
+        SpinnerNumberModel sModel4 = new SpinnerNumberModel(0, 0, 30, 1);
+        cantidad3 = new JSpinner(sModel4);
+        
         marca = new JComboBox();
 		marca.setModel(new DefaultComboBoxModel(new String[] {"SONY","OZTER", "SAMURAI", "CHALENGER", "SAMSUNG", "LG"}));
         
+		productos = new JComboBox();
+		cedula2 = new JComboBox();
+		
         
 	}
 	public void actionPerformed(ActionEvent e) {
@@ -226,6 +223,7 @@ public class Izquierdo extends JPanel implements ActionListener {
             
             //String nombre, String marca, int cantidad, int valor, float peso
             lista3.add(new Producto(nombre,mar,can,val,p));
+            productos.addItem(nombre);
             
         }
         
@@ -242,11 +240,16 @@ public class Izquierdo extends JPanel implements ActionListener {
         	String foto = JOptionPane.showInputDialog(" foto ");
         	
         	lista4.add(new Cliente(nombrec,apellido,cedula,empresa,edad,suel,foto));
-        	lista2.add(new Cliente2(nombrec,apellido,cedula,empresa,ed,s,foto));
+
+        	String cli = apellido+"-"+nombrec+"-"+cedula+"-"+ed+"-"+empresa+"-"+s+"-"+foto;
+        	
+        	lista7.add(cli);
+        	cedula2.addItem(cedula);
+        	
         }
         	
         if( accion.equals( LISTARI ) ) {
-        	
+        	referencia_almacen.clear();
         	 Iterator<Producto> it = lista3.iterator();
              Producto ob;
              while (it.hasNext()){
@@ -260,23 +263,45 @@ public class Izquierdo extends JPanel implements ActionListener {
         }
         
         if( accion.equals( LISTARC ) ) {
+        	referencia_almacen.clear();
+            
+        	Collections.sort(lista7);
         	
-            Collections.sort(lista2);
-        	
-        	
-        	Iterator<Cliente2> it = lista2.iterator();
-            Cliente2 ob;
+        	Iterator<String> it = lista7.iterator();
+            String ob;
             while (it.hasNext()){
                 ob = it.next();
-                referencia_almacen.add(ob.getDetalles());
-        		 Object[][] datos = referencia_almacen.toArray(new Object[referencia_almacen.size()][]);
-        		 referencia_tabla_model.setDataVector(datos, columnas2);
+                String[] parts = ob.split("-");
+            	String part1 = parts[0];
+            	String part2 = parts[1];
+            	String part3 = parts[2];
+            	String part4 = parts[3];
+            	String part5 = parts[4];
+            	String part6 = parts[5];
+            	String part7 = parts[6];
+            	System.out.println("entre");
+            	lista2.add(new Cliente2(part2,part1,part3,part4,part5,part6,part7));	
                  
             }
+            
+            referencia_almacen.clear();
+            Iterator<Cliente2> it2 = lista2.iterator();
+            Cliente2 ob2;
+            while (it2.hasNext()){
+                ob2 = it2.next();
+                System.out.println("entre2");
+                referencia_almacen.add(ob2.getDetalles());
+        		 Object[][] datos = referencia_almacen.toArray(new Object[referencia_almacen.size()][]);
+        		 referencia_tabla_model.setDataVector(datos, columnas2);
+        		 
+                 
+            }
+           
+            
         }
         
         if( accion.equals( ALERTA ) ) {
-        	
+        	referencia_almacen.clear();
         	Iterator<Producto> it = lista3.iterator();
             Producto ob;
             while (it.hasNext()){
@@ -292,11 +317,54 @@ public class Izquierdo extends JPanel implements ActionListener {
         }
         
         if( accion.equals( MEJORES ) ) {
+        	referencia_almacen.clear();
+        	Collections.sort(lista4);
+        	int cont = 0;
+        	Iterator<Cliente> it = lista4.iterator();
+        	Cliente ob;
+            while (it.hasNext()){
+                ob = it.next();
+                if(cont<3) {
+                	referencia_almacen.add(ob.getDetalles());
+           		 	Object[][] datos = referencia_almacen.toArray(new Object[referencia_almacen.size()][]);
+           		 	referencia_tabla_model.setDataVector(datos, columnas2);    
+           		 	cont++;
+                }
+                
+                 
+            }
         	
         	
         }
+        
+        if( accion.equals( COMPRA ) ) {
+        	
+        	JOptionPane.showMessageDialog( null, cedula2, "Seleccione la cedula del comprador", JOptionPane.QUESTION_MESSAGE);
+            String ced = (String) cedula2.getSelectedItem();
+        	
+            JOptionPane.showMessageDialog( null, productos, "selecione el producto a comprar", JOptionPane.QUESTION_MESSAGE);
+            String pro = (String) productos.getSelectedItem();
             
+            JOptionPane.showMessageDialog(null, cantidad3,"Indique la cantidad ", JOptionPane.QUESTION_MESSAGE);
+            int can3 =(int) cantidad3.getValue() ;
             
+            lista6.add(new ClienteC(ced,pro,can3));
+        	
+        }
+         
+        
+        if( accion.equals( ELIMINAR ) ) {
+        	
+        	JOptionPane.showMessageDialog( null, cedula2, "Seleccione la cedula del comprador", JOptionPane.QUESTION_MESSAGE);
+            String ced = (String) cedula2.getSelectedItem();
+        	
+            JOptionPane.showMessageDialog( null, productos, "selecione el producto a comprar", JOptionPane.QUESTION_MESSAGE);
+            String pro = (String) productos.getSelectedItem();
+            
+            JOptionPane.showMessageDialog(null, cantidad3,"Indique la cantidad ", JOptionPane.QUESTION_MESSAGE);
+            int can3 =(int) cantidad3.getValue() ;
+        	
+        }
             
         }
         

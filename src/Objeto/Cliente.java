@@ -1,6 +1,6 @@
 package Objeto;
 
-public class Cliente {
+public class Cliente implements Comparable<Cliente>{
 
 	private String nombre,apellido,cedula,empresa;
 	private int edad;
@@ -91,6 +91,17 @@ public class Cliente {
 	public String toString() {
 		
 		return nombre+apellido+cedula+empresa+edad+sueldo+Foto;
+	}
+
+	
+	public int compareTo(Cliente o) {
+		if (sueldo < o.sueldo) {
+	        return 1;
+	    }
+	    if (sueldo > o.sueldo) {
+	        return -1;
+	    }
+		return 0;
 	}
 	
 	
