@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,8 +18,10 @@ import java.util.TreeMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -41,17 +44,19 @@ public class Izquierdo extends JPanel implements ActionListener {
     public static final String REGISTRAR = "REGISTRAR";
     public static final String LISTARC = "LISTARC";
     public static final String MEJORES = "MEJORES";
-    public static final String COMPRA = "AGREGARP";
-    public static final String ELIMINAR = "AGREGARP";
+    public static final String COMPRA = "COMPRA";
+    public static final String ELIMINAR = "ELIMINAR";
 	 /**
      * Botón para agregar 
      */
     //private Derecho mapa3;
     private SubVentana sub1;
+    private Inferior lista;
+    private JFileChooser foto2;
     private JButton agregar,listari,alerta,registrar,listarc,mejores,compra,eliminar;
     private JTextField nombrep,valor,nombre,apellido,cedula,edad,empresa,sueldo;
     private JComboBox marca,listado,productos,cedula2;
-    private JSpinner cantidad1,cantidad2,cantidad3,peso;
+    private JSpinner cantidad1,cantidad2,cantidad3,cantidad4,peso;
     private String[] columnas = {" Nombre ", " Marca ", " Cantidad ", " Peso(kg) ", " Valor Unitario "};
     private String[] columnas2 = {" Nombre ", " apellido ", " cedula ", " edad ", " empresa "," sueldo actual "," foto "};
     //private ArrayList<Persona> lista2 = new ArrayList<Persona>();
@@ -74,6 +79,42 @@ public class Izquierdo extends JPanel implements ActionListener {
 		
 	    this.iniciar();  
 	}
+
+	
+	
+	
+	
+	public ArrayList<ClienteC> getLista6() {
+		return lista6;
+	}
+
+
+
+
+
+	public void setLista6(ArrayList<ClienteC> lista6) {
+		this.lista6 = lista6;
+	}
+
+
+
+
+
+	public ArrayList<Cliente> getLista4() {
+		return lista4;
+	}
+
+
+
+
+
+	public void setLista4(ArrayList<Cliente> lista4) {
+		this.lista4 = lista4;
+	}
+
+
+
+
 
 	public void iniciar() {
 
@@ -197,12 +238,15 @@ public class Izquierdo extends JPanel implements ActionListener {
         SpinnerNumberModel sModel4 = new SpinnerNumberModel(0, 0, 30, 1);
         cantidad3 = new JSpinner(sModel4);
         
+        SpinnerNumberModel sModel5 = new SpinnerNumberModel(0, 0, 30, 1);
+        cantidad4 = new JSpinner(sModel5);
+        
         marca = new JComboBox();
 		marca.setModel(new DefaultComboBoxModel(new String[] {"SONY","OZTER", "SAMURAI", "CHALENGER", "SAMSUNG", "LG"}));
         
 		productos = new JComboBox();
 		cedula2 = new JComboBox();
-		
+	    foto2 = new JFileChooser();
         
 	}
 	public void actionPerformed(ActionEvent e) {
@@ -237,11 +281,13 @@ public class Izquierdo extends JPanel implements ActionListener {
         	String empresa = JOptionPane.showInputDialog(" Empresa ");
         	String s = JOptionPane.showInputDialog(" Sueldo actual ");
         	float suel = Float.parseFloat(s);
-        	String foto = JOptionPane.showInputDialog(" foto ");
-        	
-        	lista4.add(new Cliente(nombrec,apellido,cedula,empresa,edad,suel,foto));
+        	//String foto = JOptionPane.showInputDialog(" foto ");
+        	JOptionPane.showMessageDialog(null,foto2,"Seleccione el archivo ", JOptionPane.QUESTION_MESSAGE);
+        	String direc = foto2.getSelectedFile().getPath();
+        	System.out.println("imagen :"+direc);
+        	lista4.add(new Cliente(nombrec,apellido,cedula,empresa,edad,suel,createImage(direc)));
 
-        	String cli = apellido+"-"+nombrec+"-"+cedula+"-"+ed+"-"+empresa+"-"+s+"-"+foto;
+        	String cli = apellido+"-"+nombrec+"-"+cedula+"-"+ed+"-"+empresa+"-"+s+"-"+direc;
         	
         	lista7.add(cli);
         	cedula2.addItem(cedula);
@@ -348,27 +394,88 @@ public class Izquierdo extends JPanel implements ActionListener {
             JOptionPane.showMessageDialog(null, cantidad3,"Indique la cantidad ", JOptionPane.QUESTION_MESSAGE);
             int can3 =(int) cantidad3.getValue() ;
             
-            lista6.add(new ClienteC(ced,pro,can3));
+            
         	
+            int pre=0;
+            Iterator<Producto> it = lista3.iterator();
+            Producto ob;
+            while (it.hasNext()){
+                ob = it.next();
+                if(ob.getNombre()==pro) {
+                	pre = ob.getValor()*can3;
+                	ob.setCantidad(ob.getCantidad()-can3);
+                }
+                
+                 
+            }
+            lista6.add(new ClienteC(ced,pro,can3,pre));    
+            String nl = System.getProperty("line.separator");
+            JOptionPane.showMessageDialog(null,"-------Factura--------"+nl+"Producto :"+pro+nl+"Valor de la compra : "+pre);
+            
+            lista = new Inferior(lista4,lista6);
+            
         }
          
         
         if( accion.equals( ELIMINAR ) ) {
-        	
         	JOptionPane.showMessageDialog( null, cedula2, "Seleccione la cedula del comprador", JOptionPane.QUESTION_MESSAGE);
-            String ced = (String) cedula2.getSelectedItem();
-        	
-            JOptionPane.showMessageDialog( null, productos, "selecione el producto a comprar", JOptionPane.QUESTION_MESSAGE);
-            String pro = (String) productos.getSelectedItem();
+            String cedu = (String) cedula2.getSelectedItem();
+            JComboBox aux = new JComboBox();
+            Iterator<ClienteC> it = lista6.iterator();
+            ClienteC ob;
+            while (it.hasNext()){	
+                ob = it.next();
+                if(ob.getCedula()==cedu) {
+                	aux.addItem(ob.getLista());
+                }               
+            }
             
-            JOptionPane.showMessageDialog(null, cantidad3,"Indique la cantidad ", JOptionPane.QUESTION_MESSAGE);
-            int can3 =(int) cantidad3.getValue() ;
+            JOptionPane.showMessageDialog( null, aux, "Lista de productos", JOptionPane.QUESTION_MESSAGE);
+            String pro = (String) aux.getSelectedItem();
         	
-        }
+            JOptionPane.showMessageDialog(null, cantidad4,"Indique la cantidad ", JOptionPane.QUESTION_MESSAGE);
+            int can4 =(int) cantidad4.getValue() ;
+            
+            
+            Iterator<Producto> it2 = lista3.iterator();
+            Producto ob2;
+            while (it2.hasNext()){
+                ob2 = it2.next();
+                if(ob2.getNombre()==pro) {
+                	//pre = ob.getValor()*can3;
+                	ob2.setCantidad(ob2.getCantidad()+can4);
+                }
+                
+                 
+            }
+            
+            Iterator<ClienteC> it3 = lista6.iterator();
+            ClienteC ob3;
+            while (it3.hasNext()){	
+                ob3 = it3.next();
+                if(ob3.getLista()==pro) {
+                	it3.remove();
+                }               
+            }
             
         }
         
-            }
+       //-----------------------------
+        
+        }
+ 
+	
+	 public ImageIcon createImage(String path) {
+		  URL imgURL = getClass().getResource(path);
+		     if (imgURL != null) {
+		         return new ImageIcon(imgURL);
+		     } else {
+		         System.err.println("Couldn't find file: " + path);
+		         return null;
+		     }
+		 }
+	
+}
         	
         
 		

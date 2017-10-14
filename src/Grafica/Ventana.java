@@ -10,13 +10,14 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
+import Objeto.*;
 
 
 public class Ventana extends JFrame{
 
 	Superior Arriba;
 	Inferior Abajo;
+	private Inferior Calculos;
 	//Centro PCentro;
 	Izquierdo datos;
 	//Derecho busqueda;
@@ -25,6 +26,8 @@ public class Ventana extends JFrame{
 	private JTable tablaP;
 	private String[] columnas = {" Nombre ", " Cantidad ", " Marca ", " Peso(kg) ", " Valor Unitario "};
 	private ArrayList<Object[]> productos = new ArrayList<Object[]>();
+	private ArrayList<ClienteC> lista2 = new ArrayList<ClienteC>();
+	private ArrayList<Cliente> lista3 = new ArrayList<Cliente>();
 	private DefaultTableModel table_model;
 	private Object[][] datos2; 
 	 private Map<Integer, String> mapa3 = new TreeMap<Integer, String>();
@@ -60,8 +63,7 @@ public class Ventana extends JFrame{
 		Arriba = new Superior( );
         add(Arriba, BorderLayout.NORTH );
 
-        Abajo = new Inferior();
-        add( Abajo, BorderLayout.SOUTH );
+        
 
         //PCentro = new Centro();
         //add( PCentro, BorderLayout.CENTER );
@@ -78,10 +80,15 @@ public class Ventana extends JFrame{
 		table_model = new DefaultTableModel(datos2, columnas);
 		tablaP = new JTable(table_model);
 		
-		
 		formulario = new Izquierdo(table_model, productos);
+		
+		Calculos = new Inferior(formulario.getLista4(),formulario.getLista6());
+		
+		
+		
 		//mapa=new Derecho(formulario.getMapa());
 		//this.add(mapa, BorderLayout.EAST);
+		this.add(Calculos,BorderLayout.SOUTH);
 		this.add(formulario, BorderLayout.WEST);
 		this.add(new JScrollPane(tablaP), BorderLayout.CENTER);
 		
