@@ -135,7 +135,7 @@ public class Izquierdo extends JPanel implements ActionListener {
         constraint.insets = insets;
         
         
-        agregar = new JButton( ".I." );
+        agregar = new JButton( "Agregar" );
         agregar.addActionListener( this );
         agregar.setActionCommand( AGREGAR );	       
         constraint = new GridBagConstraints( );
