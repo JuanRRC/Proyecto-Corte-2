@@ -257,14 +257,42 @@ public class Izquierdo extends JPanel implements ActionListener {
         	
         	
         	String nombre = JOptionPane.showInputDialog("Digite el nombre del producto");
+        	
+            if(nombre.length()==0) {
+            	JOptionPane.showMessageDialog(this, "nombre incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
+            	
+            }
+            
+            
             JOptionPane.showMessageDialog(null, cantidad1,"Indique la cantidad ", JOptionPane.QUESTION_MESSAGE);
-            int can =(int) cantidad1.getValue() ;
-            JOptionPane.showMessageDialog( null, marca, "selecione la marca", JOptionPane.QUESTION_MESSAGE);
+            int can =(int) cantidad1.getValue();
+           
+            if(can==0) {
+            	JOptionPane.showMessageDialog(this, "cantidad  incorrecta ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
+            	
+            }
             String mar = (String) marca.getSelectedItem();
+            JOptionPane.showMessageDialog( null, marca, "selecione la marca", JOptionPane.QUESTION_MESSAGE);
+           
+            if(mar.length()==0) {
+            	JOptionPane.showMessageDialog(this, "marca   incorrecta  campo vacio ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
+            	
+            }
+            
+            
             JOptionPane.showMessageDialog(null, peso,"Indique el peso ", JOptionPane.QUESTION_MESSAGE);
             int p =(int) peso.getValue() ;
-            int val = Integer.parseInt(JOptionPane.showInputDialog("Digite el valor unitario del producto"));
+            if(p==0) {
+            	JOptionPane.showMessageDialog(this, "peso  incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
+            	
+            }
             
+            int val = Integer.parseInt(JOptionPane.showInputDialog("Digite el valor unitario del producto"));
+            if(val==0) {
+            	JOptionPane.showMessageDialog(this, "valor  incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
+            	
+            }
+
             //String nombre, String marca, int cantidad, int valor, float peso
             lista3.add(new Producto(nombre,mar,can,val,p));
             productos.addItem(nombre);
@@ -273,14 +301,45 @@ public class Izquierdo extends JPanel implements ActionListener {
         
         if( accion.equals( REGISTRAR ) ) {
 //String nombre, String apellido, String cedula, String empresa, int edad, float sueldo, String foto,double compras        	
-        	String nombrec = JOptionPane.showInputDialog("  Nombre  ");
+        	String nombrec = JOptionPane.showInputDialog("  nombre  ");
+        	 if(nombrec.length()==0) {
+             	JOptionPane.showMessageDialog(this, "nombre  incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
+             	
+             }
+             
         	String apellido = JOptionPane.showInputDialog(" Apellido ");
+        	 if(apellido.length()==0) {
+             	JOptionPane.showMessageDialog(this, "apellido  incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
+             	
+             }
+             
         	String cedula = JOptionPane.showInputDialog("   Cedula    ");
+        	 if(cedula.length()==0) {
+             	JOptionPane.showMessageDialog(this, "cedula  incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
+             	
+             }
+             
+        	
         	String ed = JOptionPane.showInputDialog(" Edad ");
         	int edad = Integer.parseInt(ed);
+        	 if(edad==0) {
+             	JOptionPane.showMessageDialog(this, "edad  incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
+             	
+             }
+             
         	String empresa = JOptionPane.showInputDialog(" Empresa ");
+        	 if(empresa.length()==0) {
+             	JOptionPane.showMessageDialog(this, "Empresa  incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
+             	
+             }
+             
         	String s = JOptionPane.showInputDialog(" Sueldo actual ");
         	float suel = Float.parseFloat(s);
+        	 if(suel==0) {
+             	JOptionPane.showMessageDialog(this, "sueldo  incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
+             	
+             }
+             
         	//String foto = JOptionPane.showInputDialog(" foto ");
         	JOptionPane.showMessageDialog(null,foto2,"Seleccione el archivo ", JOptionPane.QUESTION_MESSAGE);
         	String direc = foto2.getSelectedFile().getPath();
