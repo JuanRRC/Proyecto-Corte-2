@@ -4,9 +4,13 @@ import Objeto.*;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +20,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -52,6 +57,8 @@ public class Izquierdo extends JPanel implements ActionListener {
     //private Derecho mapa3;
     private SubVentana sub1;
     private Inferior lista;
+    private Image img;
+    private String url;
     private JFileChooser foto2;
     private JButton agregar,listari,alerta,registrar,listarc,mejores,compra,eliminar;
     private JTextField nombrep,valor,nombre,apellido,cedula,edad,empresa,sueldo;
@@ -121,7 +128,7 @@ public class Izquierdo extends JPanel implements ActionListener {
 		 		
         setLayout( new GridBagLayout( ) );
 
-        Border borde = BorderFactory.createTitledBorder( "Datos" );
+        Border borde = BorderFactory.createTitledBorder( "Menu" );
         setBorder( borde );
         
        
@@ -135,7 +142,7 @@ public class Izquierdo extends JPanel implements ActionListener {
         constraint.insets = insets;
         
         
-        agregar = new JButton( ".I." );
+        agregar = new JButton( "Agregar" );
         agregar.addActionListener( this );
         agregar.setActionCommand( AGREGAR );	       
         constraint = new GridBagConstraints( );
@@ -341,15 +348,30 @@ public class Izquierdo extends JPanel implements ActionListener {
              }
              
         	//String foto = JOptionPane.showInputDialog(" foto ");
-        	JOptionPane.showMessageDialog(null,foto2,"Seleccione el archivo ", JOptionPane.QUESTION_MESSAGE);
-        	String direc = foto2.getSelectedFile().getPath();
-        	System.out.println("imagen :"+direc);
-        	lista4.add(new Cliente(nombrec,apellido,cedula,empresa,edad,suel,createImage(direc)));
+        	       	
+            foto2.setDialogTitle( "Buscar imagen" );
+            foto2.setMultiSelectionEnabled( false );
 
-        	String cli = apellido+"-"+nombrec+"-"+cedula+"-"+ed+"-"+empresa+"-"+s+"-"+direc;
+            int resultado = foto2.showOpenDialog( this );
+            if( resultado == JFileChooser.APPROVE_OPTION )
+            {
+                url = foto2.getSelectedFile( ).getAbsolutePath( );
+                
+            }
+        	
+            JOptionPane.showMessageDialog(null, "Ven la Imagen Cambio.", "Trinisoft",JOptionPane.INFORMATION_MESSAGE, createImage(url));
+        	
+        	lista4.add(new Cliente(nombrec,apellido,cedula,empresa,edad,suel,createImage(url)));
+
+        	String cli = apellido+"-"+nombrec+"-"+cedula+"-"+ed+"-"+empresa+"-"+s+"-"+url;
         	
         	lista7.add(cli);
         	cedula2.addItem(cedula);
+        	
+        	lista2.add(new Cliente2(nombrec,apellido,cedula,ed,empresa,s,url));
+        	
+        	
+        	Collections.sort(lista2);
         	
         }
         	
@@ -368,33 +390,14 @@ public class Izquierdo extends JPanel implements ActionListener {
         }
         
         if( accion.equals( LISTARC ) ) {
+        	      	
         	referencia_almacen.clear();
-            
-        	Collections.sort(lista7);
-        	
-        	Iterator<String> it = lista7.iterator();
-            String ob;
-            while (it.hasNext()){
-                ob = it.next();
-                String[] parts = ob.split("-");
-            	String part1 = parts[0];
-            	String part2 = parts[1];
-            	String part3 = parts[2];
-            	String part4 = parts[3];
-            	String part5 = parts[4];
-            	String part6 = parts[5];
-            	String part7 = parts[6];
-            	System.out.println("entre");
-            	lista2.add(new Cliente2(part2,part1,part3,part4,part5,part6,part7));	
-                 
-            }
-            
-            referencia_almacen.clear();
-            Iterator<Cliente2> it2 = lista2.iterator();
+   		 	Iterator<Cliente2> it2 = lista2.iterator();
             Cliente2 ob2;
             while (it2.hasNext()){
                 ob2 = it2.next();
-                System.out.println("entre2");
+                
+                
                 referencia_almacen.add(ob2.getDetalles());
         		 Object[][] datos = referencia_almacen.toArray(new Object[referencia_almacen.size()][]);
         		 referencia_tabla_model.setDataVector(datos, columnas2);
@@ -510,11 +513,16 @@ public class Izquierdo extends JPanel implements ActionListener {
             
             Iterator<ClienteC> it3 = lista6.iterator();
             ClienteC ob3;
+            boolean paso=true;
             while (it3.hasNext()){	
                 ob3 = it3.next();
-                if(ob3.getLista()==pro) {
-                    it3.remove();
-                }               
+                	if(ob3.getLista()==pro) {
+                       
+                		it3.remove();
+                		paso=false;
+                    }   
+                
+                            
             }
             
         }
@@ -525,15 +533,61 @@ public class Izquierdo extends JPanel implements ActionListener {
  
 	
 	 public ImageIcon createImage(String path) {
-		  URL imgURL = getClass().getResource(path);
-		     if (imgURL != null) {
-		         return new ImageIcon(imgURL);
-		     } else {
-		         System.err.println("Couldn't find file: " + path);
-		         return null;
-		     }
+		 ImageIcon icono = new ImageIcon();
+			
+			try {
+				
+				 BufferedImage bImagen = ImageIO.read( new File( path ) );
+				 img = bImagen.getScaledInstance( ( int ) ( 150 * 0.85 ), ( int ) ( 150 * 0.85 ), Image.SCALE_AREA_AVERAGING );;
+				
+		        
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return new ImageIcon( img );
 		 }
 	
+	 
+	 public void listar(ArrayList<String> lista) {
+		 
+		 Iterator<String> it = lista.iterator();
+         String ob;
+         while (it.hasNext()){
+             ob = it.next();
+             String[] parts = ob.split("-");
+         	String part1 = parts[0];
+         	String part2 = parts[1];
+         	String part3 = parts[2];
+         	String part4 = parts[3];
+         	String part5 = parts[4];
+         	String part6 = parts[5];
+         	String part7 = parts[6];
+         	System.out.println("entre");
+         	lista2.add(new Cliente2(part2,part1,part3,part4,part5,part6,part7));	
+              
+         }
+	 }
+	 
+	 public void listarC() {
+		 referencia_almacen.clear();
+		 Iterator<Cliente2> it2 = lista2.iterator();
+         Cliente2 ob2;
+         while (it2.hasNext()){
+             ob2 = it2.next();
+             
+             
+             referencia_almacen.add(ob2.getDetalles());
+     		 Object[][] datos = referencia_almacen.toArray(new Object[referencia_almacen.size()][]);
+     		 referencia_tabla_model.setDataVector(datos, columnas2);
+     		 
+              
+         }
+	 }
+	 
+	 
+	
+	 
 }
         	
         
