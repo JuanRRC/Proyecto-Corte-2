@@ -135,7 +135,7 @@ public class Izquierdo extends JPanel implements ActionListener {
         constraint.insets = insets;
         
         
-        agregar = new JButton( "Agregar" );
+        agregar = new JButton( ".I." );
         agregar.addActionListener( this );
         agregar.setActionCommand( AGREGAR );	       
         constraint = new GridBagConstraints( );
@@ -454,7 +454,7 @@ public class Izquierdo extends JPanel implements ActionListener {
             while (it3.hasNext()){	
                 ob3 = it3.next();
                 if(ob3.getLista()==pro) {
-                	it3.remove();
+                    it3.remove();
                 }               
             }
             
