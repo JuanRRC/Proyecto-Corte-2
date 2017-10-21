@@ -326,6 +326,8 @@ public class Izquierdo extends JPanel implements ActionListener {
             	
             	JOptionPane.showMessageDialog(this, " Error ingrese datos correctos ", "Error!", JOptionPane.ERROR_MESSAGE);
             	
+            }catch(NullPointerException ex) {
+            	JOptionPane.showMessageDialog(this, " Error Datos no ingresados ", "Error!", JOptionPane.ERROR_MESSAGE);
             }
         }
         
@@ -333,7 +335,9 @@ public class Izquierdo extends JPanel implements ActionListener {
         //-----------------------------------------------------------------------------------------------
         
         if( accion.equals( REGISTRAR ) ) {
+        	boolean paso=true;
 //String nombre, String apellido, String cedula, String empresa, int edad, float sueldo, String foto,double compras        	
+        
         try {	
         	String nombrec = JOptionPane.showInputDialog("  nombre  ");
         	 if(nombrec.length()==0) {
@@ -348,11 +352,13 @@ public class Izquierdo extends JPanel implements ActionListener {
              }
              
         	String cedula = JOptionPane.showInputDialog("   Cedula    ");
+        	
         	 if(cedula.length()==0) {
              	JOptionPane.showMessageDialog(this, "cedula  incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
              	
              }
              
+        	 
         	
         	String ed = JOptionPane.showInputDialog(" Edad ");
         	int edad = Integer.parseInt(ed);
@@ -390,6 +396,9 @@ public class Izquierdo extends JPanel implements ActionListener {
             		+nl+"Empresa :"+empresa+nl+"Sueldo : "+s, "Datos Registrados",JOptionPane.INFORMATION_MESSAGE, createImage(url));
             
             
+            
+            paso = ValidacionCC(lista4,cedula);
+            if(paso==true) {
             lista4.add(new Cliente(nombrec,apellido,cedula,empresa,edad,suel,createImage(url)));
 
         	String cli = apellido+"-"+nombrec+"-"+cedula+"-"+ed+"-"+empresa+"-"+s+"-"+url;
@@ -402,13 +411,16 @@ public class Izquierdo extends JPanel implements ActionListener {
         	
             
         	Collections.sort(lista7);
-        	
+            }
+            
         }catch(NumberFormatException ex) {
         	
         	JOptionPane.showMessageDialog(this, " Campo invalido ", "Error!", JOptionPane.ERROR_MESSAGE);
         	
+        }catch(NullPointerException ex) {
+        	JOptionPane.showMessageDialog(this, " Error Datos no ingresados ", "Error!", JOptionPane.ERROR_MESSAGE);
         }
-        	
+        
         	
         }
         	
@@ -651,6 +663,21 @@ public class Izquierdo extends JPanel implements ActionListener {
          }
 	 }
 	 
+	 public boolean ValidacionCC(ArrayList<Cliente> lista2,String cedula) {
+		 boolean bandera=true;
+		 Iterator<Cliente> it2 = lista2.iterator();
+         Cliente ob2;
+         while (it2.hasNext()){
+             ob2 = it2.next();
+             
+             if(cedula.equals(ob2.getCedula())) {
+            	 JOptionPane.showMessageDialog(this, " Usuario Ya registrado ", "Error!", JOptionPane.ERROR_MESSAGE);
+            	 bandera=false;
+             }
+             
+         }
+		 return bandera;
+	 }
 	 
 	
 	 

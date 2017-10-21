@@ -165,7 +165,9 @@ public class Inferior extends JPanel implements ActionListener {
              }
 			 }catch(IndexOutOfBoundsException ex) {
 				 JOptionPane.showMessageDialog(this, " No hay datos en el sistema (Se eliminaron o no existen) ", "Error!", JOptionPane.ERROR_MESSAGE);
-			 }
+			 }catch(NullPointerException ex) {
+	            	JOptionPane.showMessageDialog(this, " Error Datos no ingresados ", "Error!", JOptionPane.ERROR_MESSAGE);
+	         }
 			 
 		 }
 		 
