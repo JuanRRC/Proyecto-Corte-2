@@ -2,7 +2,7 @@ package Objeto;
 
 
 
-public class Producto {
+public class Producto implements Comparable<Producto> {
 
 	private String nombre,marca;
 	private int cantidad,valor;
@@ -63,6 +63,17 @@ public class Producto {
 	public String toString() {
 		
 		return nombre+marca+cantidad+valor+peso;
+	}
+	
+	@Override
+	public int compareTo(Producto o) {
+		if (cantidad > o.cantidad) {
+	        return 1;
+	    }
+	    if (cantidad < o.cantidad) {
+	        return -1;
+	    }
+		return 0;
 	}
 	
 }

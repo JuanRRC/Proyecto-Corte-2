@@ -416,6 +416,7 @@ public class Izquierdo extends JPanel implements ActionListener {
         //-----------------------------------------------------------------------------------------------
         if( accion.equals( LISTARI ) ) {
         	referencia_almacen.clear();
+        	Collections.sort(lista3);
         	 Iterator<Producto> it = lista3.iterator();
              Producto ob;
              while (it.hasNext()){
