@@ -71,7 +71,8 @@ public class Izquierdo extends JPanel implements ActionListener {
     private JComboBox marca,listado,productos,cedula2;
     private JSpinner cantidad1,cantidad2,cantidad3,cantidad4,peso;
     private String[] columnas = {" Nombre ", " Marca ", " Cantidad ", " Valor Unitario ", " Peso(Kg) "};
-    private String[] columnas2 = {" Nombre ", " apellido ", " cedula ", " empresa ", " edad "," sueldo actual "," foto "};
+    private String[] columnas2 = {" Nombre ", " apellido ", " cedula ", " edad ", " empresa "," sueldo actual "," foto "};
+    private String[] columnas3 = {" Nombre ", " apellido ", " cedula ", " empresa ", " edad "," sueldo actual "," foto "};
     //private ArrayList<Persona> lista2 = new ArrayList<Persona>();
     private ArrayList<Producto> lista3 = new ArrayList<Producto>();
     private ArrayList<String> lista7 = new ArrayList<String>();
@@ -455,9 +456,14 @@ public class Izquierdo extends JPanel implements ActionListener {
             while (it.hasNext()){
                 ob = it.next();
                 if(ob.getCantidad()<=10) {
+                	/*
                 	referencia_almacen.add(ob.getDetalles());
            		 	Object[][] datos = referencia_almacen.toArray(new Object[referencia_almacen.size()][]);
-           		 	referencia_tabla_model.setDataVector(datos, columnas);             	
+           		 	referencia_tabla_model.setDataVector(datos, columnas);
+           		 	*/
+                	
+                	JOptionPane.showMessageDialog(null, "Alerta de inventario en :"+ob.getNombre(), "ALERTA DE INVENTARIO", JOptionPane.WARNING_MESSAGE);
+
                 }
                 
                  
@@ -477,7 +483,7 @@ public class Izquierdo extends JPanel implements ActionListener {
                 if(cont<3) {
                 	referencia_almacen.add(ob.getDetalles());
            		 	Object[][] datos = referencia_almacen.toArray(new Object[referencia_almacen.size()][]);
-           		 	referencia_tabla_model.setDataVector(datos, columnas2);    
+           		 	referencia_tabla_model.setDataVector(datos, columnas3);    
            		 	cont++;
                 }
                 
