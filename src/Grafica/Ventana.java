@@ -24,7 +24,7 @@ public class Ventana extends JFrame{
 	private Izquierdo formulario;
 	//private Derecho mapa;
 	private JTable tablaP;
-	private String[] columnas = {" Nombre ", " Cantidad ", " Marca ", " Peso(kg) ", " Valor Unitario "};
+	private String[] columnas = {" Nombre ", " Cantidad ", " Marca ", " Valor unitario ", " Peso(kg) "};
 	private ArrayList<Object[]> productos = new ArrayList<Object[]>();
 	private ArrayList<ClienteC> lista2 = new ArrayList<ClienteC>();
 	private ArrayList<Cliente> lista3 = new ArrayList<Cliente>();

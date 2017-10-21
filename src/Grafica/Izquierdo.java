@@ -64,8 +64,8 @@ public class Izquierdo extends JPanel implements ActionListener {
     private JTextField nombrep,valor,nombre,apellido,cedula,edad,empresa,sueldo;
     private JComboBox marca,listado,productos,cedula2;
     private JSpinner cantidad1,cantidad2,cantidad3,cantidad4,peso;
-    private String[] columnas = {" Nombre ", " Marca ", " Cantidad ", " Peso(kg) ", " Valor Unitario "};
-    private String[] columnas2 = {" Nombre ", " apellido ", " cedula ", " edad ", " empresa "," sueldo actual "," foto "};
+    private String[] columnas = {" Nombre ", " Marca ", " Cantidad ", " Valor Unitario ", " Peso(Kg) "};
+    private String[] columnas2 = {" Nombre ", " apellido ", " cedula ", " empresa ", " edad "," sueldo actual "," foto "};
     //private ArrayList<Persona> lista2 = new ArrayList<Persona>();
     private ArrayList<Producto> lista3 = new ArrayList<Producto>();
     private ArrayList<String> lista7 = new ArrayList<String>();
@@ -262,7 +262,7 @@ public class Izquierdo extends JPanel implements ActionListener {
 		String accion = e.getActionCommand( );
         if( accion.equals( AGREGAR ) ) {
         	
-        	
+        	try {
         	String nombre = JOptionPane.showInputDialog("Digite el nombre del producto");
         	
             if(nombre.length()==0) {
@@ -299,15 +299,21 @@ public class Izquierdo extends JPanel implements ActionListener {
             	JOptionPane.showMessageDialog(this, "valor  incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
             	
             }
-
+        	
             //String nombre, String marca, int cantidad, int valor, float peso
             lista3.add(new Producto(nombre,mar,can,val,p));
             productos.addItem(nombre);
-            
+            JOptionPane.showMessageDialog(null,"Producto Agregado");
+        	}catch(NumberFormatException ex) {
+            	
+            	JOptionPane.showMessageDialog(this, " Error ingrese datos correctos ", "Error!", JOptionPane.ERROR_MESSAGE);
+            	
+            }
         }
         
         if( accion.equals( REGISTRAR ) ) {
 //String nombre, String apellido, String cedula, String empresa, int edad, float sueldo, String foto,double compras        	
+        try {	
         	String nombrec = JOptionPane.showInputDialog("  nombre  ");
         	 if(nombrec.length()==0) {
              	JOptionPane.showMessageDialog(this, "nombre  incorrecto ingresa el dato correco", "Error!", JOptionPane.ERROR_MESSAGE);
@@ -358,10 +364,12 @@ public class Izquierdo extends JPanel implements ActionListener {
                 url = foto2.getSelectedFile( ).getAbsolutePath( );
                 
             }
-        	
-            JOptionPane.showMessageDialog(null, "Ven la Imagen Cambio.", "Trinisoft",JOptionPane.INFORMATION_MESSAGE, createImage(url));
-        	
-        	lista4.add(new Cliente(nombrec,apellido,cedula,empresa,edad,suel,createImage(url)));
+            String nl = System.getProperty("line.separator");
+            JOptionPane.showMessageDialog(null,"-------Persona Agregada--------"+nl+"Nombre :"+nombrec+nl+"Apellido : : "+apellido+nl+"Cedula: "+cedula+nl+"Edad : "+ed
+            		+nl+"Empresa :"+empresa+nl+"Sueldo : "+s, "Datos Registrados",JOptionPane.INFORMATION_MESSAGE, createImage(url));
+            
+            
+            lista4.add(new Cliente(nombrec,apellido,cedula,empresa,edad,suel,createImage(url)));
 
         	String cli = apellido+"-"+nombrec+"-"+cedula+"-"+ed+"-"+empresa+"-"+s+"-"+url;
         	
@@ -371,7 +379,15 @@ public class Izquierdo extends JPanel implements ActionListener {
         	lista2.add(new Cliente2(nombrec,apellido,cedula,ed,empresa,s,url));
         	
         	
-        	Collections.sort(lista2);
+            
+        	Collections.sort(lista7);
+        	
+        }catch(NumberFormatException ex) {
+        	
+        	JOptionPane.showMessageDialog(this, " Campo invalido ", "Error!", JOptionPane.ERROR_MESSAGE);
+        	
+        }
+        	
         	
         }
         	
@@ -390,7 +406,7 @@ public class Izquierdo extends JPanel implements ActionListener {
         }
         
         if( accion.equals( LISTARC ) ) {
-        	      	
+        	Collections.sort(lista2);    	
         	referencia_almacen.clear();
    		 	Iterator<Cliente2> it2 = lista2.iterator();
             Cliente2 ob2;
