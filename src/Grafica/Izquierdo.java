@@ -36,7 +36,13 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 
-
+/**
+ * Clase JPanel Izquierdo que contiene los metodos de la clase y sus atributos..
+ * @author Juan Ricardo Rodriguez Campos
+ * @author Juan David Reyes
+ * @verion 1.0.0
+ * @since Electrodomesticos 1.0.0
+ */
 
 
 
@@ -55,7 +61,7 @@ public class Izquierdo extends JPanel implements ActionListener {
      * Botón para agregar 
      */
     //private Derecho mapa3;
-    private SubVentana sub1;
+    
     private Inferior lista;
     private Image img;
     private String url;
@@ -78,7 +84,11 @@ public class Izquierdo extends JPanel implements ActionListener {
     private DefaultTableModel referencia_tabla_model;
 	private ArrayList<Object[]> referencia_almacen;
 	
-	
+	/**
+	 * Metodo constructor que recibe el modelo de la tabla como referencia y los datos de esta para construirlo
+	 * @param referencia_tabla_model
+	 * @param referencia_almacen
+	 */
 	public Izquierdo(DefaultTableModel referencia_tabla_model, ArrayList<Object[]> referencia_almacen) {
 		super();
 		this.referencia_tabla_model = referencia_tabla_model;
@@ -88,7 +98,7 @@ public class Izquierdo extends JPanel implements ActionListener {
 	}
 
 	
-	
+	// get y set de los atributos de la clase
 	
 	
 	public ArrayList<ClienteC> getLista6() {
@@ -122,7 +132,9 @@ public class Izquierdo extends JPanel implements ActionListener {
 
 
 
-
+	/**
+	 * Metodo Iniciar que crea los componentes del JPanel
+	 */
 	public void iniciar() {
 
 		 		
@@ -256,9 +268,14 @@ public class Izquierdo extends JPanel implements ActionListener {
 	    foto2 = new JFileChooser();
         
 	}
+	
+	/**
+	 * Metodo de actionPerformed que ejecuta las acciones de los botones 
+	 */
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+
+        //-----------------------------------------------------------------------------------------------
 		String accion = e.getActionCommand( );
         if( accion.equals( AGREGAR ) ) {
         	
@@ -310,6 +327,9 @@ public class Izquierdo extends JPanel implements ActionListener {
             	
             }
         }
+        
+
+        //-----------------------------------------------------------------------------------------------
         
         if( accion.equals( REGISTRAR ) ) {
 //String nombre, String apellido, String cedula, String empresa, int edad, float sueldo, String foto,double compras        	
@@ -391,6 +411,8 @@ public class Izquierdo extends JPanel implements ActionListener {
         	
         }
         	
+        
+        //-----------------------------------------------------------------------------------------------
         if( accion.equals( LISTARI ) ) {
         	referencia_almacen.clear();
         	 Iterator<Producto> it = lista3.iterator();
@@ -404,7 +426,8 @@ public class Izquierdo extends JPanel implements ActionListener {
              }
         	
         }
-        
+
+        //-----------------------------------------------------------------------------------------------
         if( accion.equals( LISTARC ) ) {
         	Collections.sort(lista2);    	
         	referencia_almacen.clear();
@@ -423,7 +446,8 @@ public class Izquierdo extends JPanel implements ActionListener {
            
             
         }
-        
+
+        //-----------------------------------------------------------------------------------------------
         if( accion.equals( ALERTA ) ) {
         	referencia_almacen.clear();
         	Iterator<Producto> it = lista3.iterator();
@@ -440,6 +464,8 @@ public class Izquierdo extends JPanel implements ActionListener {
             }
         }
         
+
+        //-----------------------------------------------------------------------------------------------
         if( accion.equals( MEJORES ) ) {
         	referencia_almacen.clear();
         	Collections.sort(lista4);
@@ -461,6 +487,8 @@ public class Izquierdo extends JPanel implements ActionListener {
         	
         }
         
+
+        //-----------------------------------------------------------------------------------------------
         if( accion.equals( COMPRA ) ) {
         	
         	JOptionPane.showMessageDialog( null, cedula2, "Seleccione la cedula del comprador", JOptionPane.QUESTION_MESSAGE);
@@ -494,7 +522,8 @@ public class Izquierdo extends JPanel implements ActionListener {
             
         }
          
-        
+
+        //-----------------------------------------------------------------------------------------------
         if( accion.equals( ELIMINAR ) ) {
         	JOptionPane.showMessageDialog( null, cedula2, "Seleccione la cedula del comprador", JOptionPane.QUESTION_MESSAGE);
             String cedu = (String) cedula2.getSelectedItem();
@@ -542,11 +571,16 @@ public class Izquierdo extends JPanel implements ActionListener {
             
         }
         
-       //-----------------------------
+
+        //-----------------------------------------------------------------------------------------------
         
         }
  
-	
+	/**
+	 * Metodo para crear la imegen por medio de la lectura de una dirrecion de archivo
+	 * @param path
+	 * @return
+	 */
 	 public ImageIcon createImage(String path) {
 		 ImageIcon icono = new ImageIcon();
 			
@@ -563,6 +597,10 @@ public class Izquierdo extends JPanel implements ActionListener {
 			return new ImageIcon( img );
 		 }
 	
+	 
+
+     //-----------------------------------------------------------------------------------------------
+	 //Metodos secundarios para subprocesos internos 
 	 
 	 public void listar(ArrayList<String> lista) {
 		 
@@ -584,6 +622,12 @@ public class Izquierdo extends JPanel implements ActionListener {
          }
 	 }
 	 
+	 
+
+     //-----------------------------------------------------------------------------------------------
+	 /**
+	  * Metodo listarC que lista los datos de un ArrayList
+	  */
 	 public void listarC() {
 		 referencia_almacen.clear();
 		 Iterator<Cliente2> it2 = lista2.iterator();
@@ -602,6 +646,9 @@ public class Izquierdo extends JPanel implements ActionListener {
 	 
 	 
 	
+	 
+	 
+	 //Fin de la clase Izquierdo
 	 
 }
         	

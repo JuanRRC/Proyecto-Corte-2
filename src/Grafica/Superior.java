@@ -7,6 +7,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Clase JPanel Superior que contiene la imagen cabezera  de la ventana..
+ * @author Juan Ricardo Rodriguez Campos
+ * @author Juan David Reyes
+ * @verion 1.0.0
+ * @since Electrodomesticos 1.0.0
+ */
+
+
 public class Superior extends JPanel{
 	
 	public Superior() {
@@ -22,4 +31,5 @@ public class Superior extends JPanel{
 	        setBackground( Color.WHITE );
 	}
 
+	//Fin de la clase Superior.
 }

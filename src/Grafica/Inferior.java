@@ -20,6 +20,13 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 
+/**
+ * Metodo inferior que contiene una imagen y dos botones de calculos..
+ * @author Juan Ricardo Rodriguez Campos
+ * @author Juan David Reyes
+ * @verion 1.0.0
+ * @since Electrodomesticos 1.0.0
+ */
 
 public class Inferior extends JPanel implements ActionListener {
 
@@ -32,6 +39,11 @@ public class Inferior extends JPanel implements ActionListener {
     
     private JButton ganancias,mejor;
 
+    /**
+     * Constructor de la clase que tiene como parametro dos listas con datos para trabajar
+     * @param lista
+     * @param clientes
+     */
 	public Inferior(ArrayList<Cliente>lista,ArrayList<ClienteC>clientes) {
 		super();
 		this.lista2=clientes;
@@ -42,7 +54,10 @@ public class Inferior extends JPanel implements ActionListener {
 	    this.iniciar();  
 	}
 
-
+	/**
+	 *Metodo Iniciar que crea los componentes del panel 
+	 */
+	
 	public void iniciar() {
 
 		 		
@@ -100,11 +115,16 @@ public class Inferior extends JPanel implements ActionListener {
         
 	}
 
-	
+	/**
+	 * Metodo actionPerformed que ejecuta las acciones de los botones
+	 */
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 
 		String accion = e.getActionCommand( );
+		
+
+		 //----------------------------------------------------------------------------------------
 		 if( accion.equals( GANANCIAS ) ) {
 			 int acum=0;
 			 Iterator<ClienteC> it = this.lista2.iterator();
@@ -119,6 +139,8 @@ public class Inferior extends JPanel implements ActionListener {
              JOptionPane.showMessageDialog(null,"Ganancia Total : "+acum);
          }
 		 
+		 
+		 //----------------------------------------------------------------------------------------
 		 if( accion.equals( MEJOR ) ) {
 			 try {
 			 Collections.sort(this.lista2);
@@ -152,5 +174,7 @@ public class Inferior extends JPanel implements ActionListener {
 		 
 		 
         }
+	
+	//Fin de la clase Inferior
 	}
 

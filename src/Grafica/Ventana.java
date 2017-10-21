@@ -12,9 +12,18 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import Objeto.*;
 
+/**
+ * Esta clase Ventana contiene la ventana principal y los paneles dentro de esta.
+ * @author Juan Ricardo Rodriguez Campos
+ * @author Juan David Reyes
+ * @verion 1.0.0
+ * @since Electrodomesticos 1.0.0
+ */
 
 public class Ventana extends JFrame{
 
+	// Atributos de la clase Ventana
+	
 	Superior Arriba;
 	Inferior Abajo;
 	private Inferior Calculos;
@@ -34,7 +43,10 @@ public class Ventana extends JFrame{
 	
 	
 	
-	
+	/**
+	 * metodo Ventana() que inicia los metodos de componentes y ventana principal
+	 */
+	 
 	public Ventana(){
 		 super("Programa");
 		 iniciar();
@@ -45,6 +57,10 @@ public class Ventana extends JFrame{
          setLocationRelativeTo( null );
 	}
 	
+	/**
+	 * metodo que crea la ventana con las dimensiones establecidas
+	 * @return
+	 */
 	public Ventana iniciar(){
 				
 				Dimension dims = new Dimension(1000, 650);
@@ -55,7 +71,9 @@ public class Ventana extends JFrame{
 				return this;
 	}
 	
-	
+	/**
+	 * Metodo Componente que carga el los componentes del proyecto
+	 */
 	public void componente() {
 		
 		
@@ -94,5 +112,6 @@ public class Ventana extends JFrame{
 		
 	}
 	
+	//Fin de la clase Ventana
 }
 
