@@ -120,6 +120,7 @@ public class Inferior extends JPanel implements ActionListener {
          }
 		 
 		 if( accion.equals( MEJOR ) ) {
+			 try {
 			 Collections.sort(this.lista2);
 			 Iterator<Cliente> it = this.lista3.iterator();
 			 Cliente ob;
@@ -131,8 +132,8 @@ public class Inferior extends JPanel implements ActionListener {
             		 
             		 //System.out.println(ob.getNombre()+ob.getApellido()+lista2.get(0).getCedula()+ob.getEmpresa()+ob.getEdad()+ob.getSueldo()+lista2.get(0).getCompra());
             		 String nl = System.getProperty("line.separator");
-                     JOptionPane.showMessageDialog(null,"-------Factura--------"+nl+"Nombre :"+ob.getNombre()+nl+"Apellido : "+ob.getApellido()+"Cedula : "+nl+lista2.get(0).getCedula()+nl+"Empresa : "+ob.getEmpresa()+nl+"Edad :"+ob.getEdad()+nl+"Sueldo : "+ob.getSueldo()+nl+"Valor Comprado :"+lista2.get(0).getCompra());
-                     
+            		 JOptionPane.showMessageDialog(null,"-------Persona Agregada--------"+nl+"Nombre :"+ob.getNombre()+nl+"Apellido : : "+ob.getApellido()+nl+"Cedula: "+ob.getCedula()+nl+"Edad : "+ob.getEdad()
+                     		+nl+"Empresa :"+ob.getEmpresa()+nl+"Sueldo : "+ob.getSueldo(), "Datos Registrados",JOptionPane.INFORMATION_MESSAGE,ob.getFoto3());
             	 
             	 
             	 }
@@ -140,6 +141,9 @@ public class Inferior extends JPanel implements ActionListener {
                  
                   
              }
+			 }catch(IndexOutOfBoundsException ex) {
+				 JOptionPane.showMessageDialog(this, " No hay datos en el sistema (Se eliminaron o no existen) ", "Error!", JOptionPane.ERROR_MESSAGE);
+			 }
 			 
 		 }
 		 

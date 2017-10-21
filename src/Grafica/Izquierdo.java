@@ -529,13 +529,12 @@ public class Izquierdo extends JPanel implements ActionListener {
             
             Iterator<ClienteC> it3 = lista6.iterator();
             ClienteC ob3;
-            boolean paso=true;
             while (it3.hasNext()){	
                 ob3 = it3.next();
                 	if(ob3.getLista()==pro) {
                        
                 		it3.remove();
-                		paso=false;
+                		
                     }   
                 
                             
